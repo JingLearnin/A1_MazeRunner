@@ -23,6 +23,8 @@ public class Main {
         try {
             cmd = parser.parse(getParserOption(),args);
             String fileName = cmd.getOptionValue("i");
+            Maze maze = new Maze(fileName);
+            
             
 }
     }
