@@ -20,7 +20,7 @@ public class Configuration {
             
 
             if (cmd.hasOption("i")){
-                
+                filename = cmd.getOptionValue(filename)
             }
         }
     }
