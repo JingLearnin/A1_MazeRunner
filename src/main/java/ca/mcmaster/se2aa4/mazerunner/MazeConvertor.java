@@ -1,7 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
+import java.io.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.*;
 
 /*
  * Covert Maze to 2D Arrary
@@ -11,25 +11,49 @@ import java.io.*;
 
 public class MazeConvertor {
     
-    public char[][] mazeArray (String fileName){
-        int height = getHeight(fileName);
-        int width = getWidth(fileName);
+    public char[][] mazeArray (String fileLoc){
+        int height = getHeight(fileLoc);
+        int width = getWidth(fileLoc);
 
         char [][] array = new char [height][width];
 
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileLoc))){
+            String line;
+            int row = 0;
+            while ((line = reader.readLine())!= null) {
+                for (int column = 0; column < width; column++) {
+                    char currentChar = line.charAt(column);
+                array[row][column] = currentChar;
+                }
+                row++;
+            }
 
-        return arrary;
+        }
+        catch(IOException e){
+
+        }
+
+        return array;
     }
 
 
-    private getHeight(String fileName){
+    private int getHeight(String fileLoc){
         int height = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileLoc))) {
+            while (reader.readLine() != null) height++;
+        } catch (IOException e) {
+        }
         return height;
     }
 
 
-    private getWidth(String fileName){
+    private int getWidth(String fileLoc){
         int width = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileLoc))){
+            width = reader.readLine().length();
+        }
+        catch (IOException e) {
+        }
         return width;
     }
 }

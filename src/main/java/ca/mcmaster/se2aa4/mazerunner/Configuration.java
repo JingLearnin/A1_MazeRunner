@@ -10,11 +10,12 @@ public class Configuration {
 
     public static void configure(String[] args){
 
+       
         try{
             Options options = new Options();
             CommandLineParser parser = new DefaultParser();
             options.addOption("i", true, "option reacting to -i");
-
+            options.addOption("p", true, "option reacting to -p");
             CommandLine cmd = parser.parse(options, args);
             filename = cmd.getOptionValue("i");
             
@@ -22,10 +23,14 @@ public class Configuration {
             if (cmd.hasOption("i")){
                 filename = cmd.getOptionValue(filename);
             }
+            else if (cmd.hasOption("p")) {
+                                
+            }
         }
     }
+
 
     
 };
     
-}
+
