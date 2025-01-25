@@ -5,7 +5,7 @@
 - Context: McMaster University > Engineering > Computing & Software > SFWRENG > 2AA4
 - License: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-* **Student**: [Jerry Jing](jingz2@mcmaster.ca)
+* **Student**: [Zhi Jing](jingz2@mcmaster.ca)
 * **Program**: B. Eng. In Software Engineering
 * **Course code**: SFWRENG 2AA4
 * **Course Title**: Software Design I - Introduction to Software Development
