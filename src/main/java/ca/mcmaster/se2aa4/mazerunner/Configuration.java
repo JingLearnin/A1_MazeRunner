@@ -1,36 +1,47 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.commons.cli.*;
 
 public class Configuration {
     private static final Logger logger = LogManager.getLogger();
-    private static String filename;
+    private final CommandLine cmd;
 
-    public static void configure(String[] args){
-
-       
-        try{
-            Options options = new Options();
-            CommandLineParser parser = new DefaultParser();
-            options.addOption("i", true, "option reacting to -i");
-            options.addOption("p", true, "option reacting to -p");
-            CommandLine cmd = parser.parse(options, args);
-            filename = cmd.getOptionValue("i");
-            
-
-            if (cmd.hasOption("i")){
-                filename = cmd.getOptionValue(filename);
-            }
-            else if (cmd.hasOption("p")) {
-                                
-            }
-        }
+    /**
+     * Parses the command-line arguments.
+     *
+     * @param args Command-line arguments.
+     * @throws ParseException If argument parsing fails.
+     */
+    
+     public Configuration(String[] args) throws ParseException {
+        CommandLineParser parser = new DefaultParser();
+        this.cmd = parser.parse(getParser(), args);
     }
 
+    /**
+     * Retrieves the value of the -i flag.
+     *
+     * @return The maze file path.
+     */
+    public String getMazeFile() {
+        return cmd.getOptionValue("i");
+    }
 
+    /**
+     * Defines the CLI options.
+     *
+     * @return The available CLI options.
+     */
     
-};
-    
+     private static Options getParser() {
+        Options options = new Options();
 
+        Option fileOption = new Option("i", true, "File that contains the maze");
+        fileOption.setRequired(true);
+        options.addOption(fileOption);
+
+        return options;
+    }
+}

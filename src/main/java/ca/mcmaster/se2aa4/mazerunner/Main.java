@@ -1,41 +1,52 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-
-import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Main {
 
-    //Logger in init
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        logger.info("**** Starting Maze Runner Program ****");
-        
-        //Create a parser
-        CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = null;
+        logger.info("** Starting Maze Runner");
 
         try {
-            cmd = parser.parse(getParserOption(),args);
-            String fileName = cmd.getOptionValue("i");
-            Maze maze = new Maze(fileName);
-            
-            
-}
-    }
-private static Options getParserOption(){
-    Options options = new Options();
-    
-    Option mazeOption = new Option("i", true, "Maze File");
-    //Print error message if there is no input
-    mazeOption.setRequired(true);
-    //adding options to the options object
-    options.addOption(mazeOption);
+            // Parse CLI arguments using Configuration
+            Configuration config = new Configuration(args);
 
-}  
+            // Get the maze file path
+            String filePath = config.getMazeFile();
+            logger.info("Maze file path provided: " + filePath);
+
+            // Validate that the file exists
+            if (!Files.exists(Paths.get(filePath))) {
+                throw new Exception("Maze file does not exist: " + filePath);
+            }
+
+            // Read and process the maze file
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                int row = 0;
+
+                logger.info("Processing maze file:");
+                while ((line = reader.readLine()) != null) {
+                    System.out.println("Row " + row + ": " + line);
+                    row++;
+                }
+
+                logger.info("Maze file successfully loaded and processes. Total rows: " + row);
+            }
+
+        } catch (Exception e) {
+            logger.error("Error occurred: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        logger.info("** End of Maze Runner");
+    }
 }
