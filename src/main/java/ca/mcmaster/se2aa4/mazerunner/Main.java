@@ -3,14 +3,14 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
+
 
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
@@ -25,25 +25,28 @@ public class Main {
 
             // Validate that the file exists
             if (!Files.exists(Paths.get(filePath))) {
-                throw new Exception("Maze file does not exist: " + filePath);
+                throw new IOException("Maze file does not exist: " + filePath);
             }
 
-            // Read and process the maze file
-            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-                String line;
-                int row = 0;
+            // Load the maze
+            Maze maze = new Maze(filePath);
+            logger.info("Maze successfully loaded.");
 
-                logger.info("Processing maze file:");
-                while ((line = reader.readLine()) != null) {
-                    System.out.println("Row " + row + ": " + line);
-                    row++;
-                }
+            // Solve the maze
+            MazeSolver solver = new MazeSolver();
+            Path path = solver.solve(maze);
 
-                logger.info("Maze file successfully loaded and processes. Total rows: " + row);
-            }
+            // Print the path in factorized form
+            System.out.println(path.getFactorizedForm());
 
+        } catch (IOException e) {
+            logger.error("File I/O error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+        } catch (IllegalStateException e) {
+            logger.error("Invalid maze: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         } catch (Exception e) {
-            logger.error("Error occurred: " + e.getMessage());
+            logger.error("Unexpected error: " + e.getMessage());
             System.err.println("Error: " + e.getMessage());
         }
 
