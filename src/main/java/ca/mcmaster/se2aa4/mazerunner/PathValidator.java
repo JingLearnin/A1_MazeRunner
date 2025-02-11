@@ -36,7 +36,7 @@ public class PathValidator {
         Position currentPos = entry;
         Direction currentDir = initialDir;
 
-        logger.info("Starting validation at " + entry + " facing " + currentDir);
+        logger.debug("Starting validation at " + entry + " facing " + currentDir);
 
         for (Character move : moves) {
             switch (move) {
