@@ -8,14 +8,48 @@ import java.util.List;
 
 public class Path {
 
-    private final List<Character> moves;
+    private final List<Character> moves= new ArrayList<>();
+
+
 
     public Path() {
-        this.moves = new ArrayList<>();
+
     }
 
-    public Path(List<Character> moves) {
-        this.moves = new ArrayList<>(moves);
+    public Path(String pathString) {
+        String inputStr = expandFactorizedPath(pathString);
+        for (Character c : inputStr.toCharArray()) {
+            if (c != ' ') {
+                this.add(c);
+            }
+        }
+
+    }
+
+    private String expandFactorizedPath(String path) {
+        StringBuilder expanded = new StringBuilder();
+        int i = 0;
+
+        while(i < path.length()) {
+            char current = path.charAt(i);
+
+            if(Character.isDigit(current)) {
+                // Build number
+                int num = 0;
+                while(i < path.length() && Character.isDigit(path.charAt(i))) {
+                    num = num * 10 + (path.charAt(i) - '0');
+                    i++;
+                }
+                // Get following character
+                char move = path.charAt(i);
+                expanded.append(String.valueOf(move).repeat(num));
+            } else {
+                expanded.append(current);
+            }
+            i++;
+        }
+
+        return expanded.toString();
     }
 
 
@@ -56,6 +90,11 @@ public class Path {
         }
 
         return factorized.toString();
+    }
+
+
+    public List<Character> getMoves() {
+        return new ArrayList<>(this.moves);
     }
 
     @Override

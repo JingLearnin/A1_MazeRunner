@@ -28,6 +28,16 @@ public class Configuration {
     public String getMazeFile() {
         return cmd.getOptionValue("i");
     }
+    /**
+     * Retrieves the value of the -p flag.
+     *
+     * @return The maze file path.
+     */
+    public boolean hasPathOption() {return cmd.hasOption("p");}
+
+    public String getPath() {
+        return cmd.getOptionValue("p");
+    }
 
     /**
      * Defines the CLI options.
@@ -41,6 +51,8 @@ public class Configuration {
         Option fileOption = new Option("i", true, "File that contains the maze");
         fileOption.setRequired(true);
         options.addOption(fileOption);
+
+        options.addOption(new Option("p", true, "Path provided by user is vaild to finish the maze"));
 
         return options;
     }
