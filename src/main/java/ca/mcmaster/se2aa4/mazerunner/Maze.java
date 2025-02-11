@@ -25,7 +25,7 @@ public class Maze {
 
     public Maze(String filePath) throws IOException, IllegalStateException {
         logger.debug("Loading maze file from: " + filePath);
-        logger.info("Maze successfully loaded.");
+        logger.debug("Maze successfully loaded.");
         
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))){
 
@@ -74,8 +74,8 @@ public class Maze {
 
         startPos = startPosFinder();
         endPos = endPosFinder();
-        logger.info("Start Position: " + startPos);
-        logger.info("Eng Position: " + endPos);
+        logger.debug("Start Position: " + startPos);
+        logger.debug("Eng Position: " + endPos);
     }
     
 

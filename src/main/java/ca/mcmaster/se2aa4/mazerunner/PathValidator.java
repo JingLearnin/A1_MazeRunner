@@ -58,7 +58,7 @@ public class PathValidator {
         }
 
         boolean valid = currentPos.equals(exit);
-        logger.info("Path validation result: " + (valid ? "VALID" : "INVALID"));
+        logger.debug("Path validation result: " + (valid ? "VALID" : "INVALID"));
         return valid;
     }
 

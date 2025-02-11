@@ -22,7 +22,7 @@ public class Main {
 
 
             String filePath = config.getMazeFile();
-            logger.info("Maze file path provided: " + filePath);
+            logger.debug("Maze file path provided: " + filePath);
 
 
             if (!Files.exists(Paths.get(filePath))) {
@@ -31,7 +31,7 @@ public class Main {
 
             // Load the maze
             Maze maze = new Maze(filePath);
-            logger.info("Maze successfully loaded.");
+            logger.debug("Maze successfully loaded.");
             PathValidator validator = new PathValidator(maze);
 
 
