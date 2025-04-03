@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class Configuration {
     private static final Logger logger = LogManager.getLogger();
     private final CommandLine cmd;
+    private final String[] args;
 
     /**
      * Parses the command-line arguments.
@@ -14,9 +15,9 @@ public class Configuration {
      * @param args Command-line arguments.
      * @throws ParseException If argument parsing fails.
      */
-    
      public Configuration(String[] args) throws ParseException {
         CommandLineParser parser = new DefaultParser();
+        this.args = args;
         this.cmd = parser.parse(getParser(), args);
     }
 
@@ -39,6 +40,11 @@ public class Configuration {
         return cmd.getOptionValue("p");
     }
 
+    public String getAlgorithm() {
+        // Default to "right" if no algorithm is specified
+        return cmd.getOptionValue("method");
+    }
+
     /**
      * Defines the CLI options.
      *
@@ -53,7 +59,12 @@ public class Configuration {
         options.addOption(fileOption);
 
         options.addOption(new Option("p", true, "Path provided by user is vaild to finish the maze"));
+        options.addOption(new Option("method", true, "Algorithm that use to solve the maze"));
 
+        
         return options;
     }
+
+    
+
 }

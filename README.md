@@ -86,7 +86,7 @@ The delivered program at the end of this assignment should use the following fla
 
 If you are also delivering the bonus, your program will react to a third flag:
 
-- `-method {tremaux, righthand}`: specifies which path computation method to use. (default is right hand)
+- `-method {righthand}`: specifies which path computation method to use. (default is right hand)
 
 #### Examples
 

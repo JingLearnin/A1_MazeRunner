@@ -11,13 +11,14 @@ public class Main {
 
     private static final Logger logger = LogManager.getLogger();
 
-
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
 
         try {
 
             Configuration config = new Configuration(args);
+            MazeFactory factory = new FileMazeFactory();
+            Maze maze = factory.createMaze(config.getMazeFile());
 
 
 
@@ -30,7 +31,7 @@ public class Main {
             }
 
             // Load the maze
-            Maze maze = new Maze(filePath);
+            //Maze maze = new Maze(filePath);
             logger.debug("Maze successfully loaded.");
             PathValidator validator = new PathValidator(maze);
 
@@ -45,10 +46,12 @@ public class Main {
 
                 boolean isValid = validator.isValidate(userPath);
                 System.out.println((isValid ? "correct path" : "incorrect path"));
-            } else
+            } 
+            else
+            
             {
                 // Compute and show path normally
-                MazeSolver solver = new RightHandMethod();
+                MazeSolver solver = SolverCommandFactory.createCommand(config.getAlgorithm());
                 Path solution = solver.solve(maze);
                 System.out.println(solution.getFactorizedForm());
             }
