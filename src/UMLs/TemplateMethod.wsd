@@ -1,0 +1,35 @@
+@startuml
+title Template Method Pattern - Maze Solver
+
+abstract class MazeSolverTemplate {
+    +solve(maze: Maze): Path
+    #initializePosition(): void
+    #isAtExit(): boolean
+    #chooseNextMove(): Direction
+    #move(): void
+    #recordStep(): void
+}
+
+class RightHandSolver {
+    +chooseNextMove(): Direction
+}
+
+class BFSSolver {
+    +chooseNextMove(): Direction
+}
+
+class AStarSolver {
+    +chooseNextMove(): Direction
+}
+
+MazeSolverTemplate <|-- RightHandSolver
+MazeSolverTemplate <|-- BFSSolver
+MazeSolverTemplate <|-- AStarSolver
+
+class Maze {
+    +loadFromFile(file: File): void
+}
+
+MazeSolverTemplate --> Maze : uses
+
+@enduml

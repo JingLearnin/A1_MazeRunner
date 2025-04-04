@@ -1,0 +1,27 @@
+@startuml
+title MazeRunner Sequence with Factory Method
+
+participant Main
+participant Configuration as Config
+participant MazeFactory as MF
+participant FileMazeFactory as FMF
+participant Maze
+participant SolverCommandFactory as SCF
+participant MazeSolverCommand as Solver
+
+Main -> Config: new(args)
+Main -> MF: createMaze(config)
+MF -> FMF: createMaze(config)
+FMF -> Maze: new()
+Maze --> FMF
+FMF --> MF
+MF --> Main
+
+Main -> SCF: create(config)
+SCF -> Solver: new()
+Solver --> SCF
+SCF --> Main
+
+note right of MF: MazeFactory delegates creation\nto a specific implementation (FileMazeFactory).
+note right of SCF: SolverCommandFactory selects solver\nbased on configuration.
+@enduml

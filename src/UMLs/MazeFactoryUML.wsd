@@ -1,0 +1,49 @@
+@startuml
+title UML Class Diagram - Maze Initialization (Final Version)
+
+class Main {
+    +main(args: String[]): void
+}
+
+class Configuration {
+    +args: String[]
+    +getMazePath(): String
+    +getSolverType(): String
+    +getInputFile(): File
+}
+
+interface MazeFactory {
+    +createMaze(config: Configuration): Maze
+}
+
+class FileMazeFactory {
+    +createMaze(config: Configuration): Maze
+}
+
+class Maze {
+    +loadFromFile(file: File): void
+}
+
+class SolverCommandFactory {
+    +create(config: Configuration): MazeSolverCommand
+}
+
+interface MazeSolverCommand {
+    +solve(maze: Maze): Path
+}
+
+class MazeAdapter {
+    +adapt(maze: Maze): AdaptedMaze
+}
+
+Main --> Configuration
+Main --> MazeFactory
+Main --> SolverCommandFactory
+MazeFactory <|-- FileMazeFactory
+FileMazeFactory --> Maze
+SolverCommandFactory --> MazeSolverCommand
+MazeSolverCommand --> MazeAdapter
+MazeAdapter --> Maze
+Configuration ..> Maze : provides input path
+
+@enduml
